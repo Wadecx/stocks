@@ -171,3 +171,4 @@ Pour ajouter de nouvelles fonctionnalités:
 ## Auteur
 
 Projet réalisé dans le cadre d'un cours de développement web.
+# stocks
