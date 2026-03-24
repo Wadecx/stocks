@@ -28,42 +28,42 @@ export default function Navbar() {
   }
 
   return (
-    <nav className="bg-blue-600 text-white shadow-lg">
+    <nav className="bg-black text-white shadow-lg">
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center space-x-8">
             <Link href="/" className="text-xl font-bold">
-              Gestion Commandes
+              STOCKS SUWOOO
             </Link>
             <div className="flex space-x-4">
               <Link
                 href="/"
-                className={`hover:bg-blue-700 px-3 py-2 rounded ${
-                  pathname === '/' ? 'bg-blue-700' : ''
+                className={`hover:bg-white hover:text-black px-3 py-2 rounded ${
+                  pathname === '/' ? 'bg-black' : ''
                 }`}
               >
                 Dashboard
               </Link>
               <Link
                 href="/clients"
-                className={`hover:bg-blue-700 px-3 py-2 rounded ${
-                  pathname.startsWith('/clients') ? 'bg-blue-700' : ''
+                className={`hover:bg-white hover:text-black px-3 py-2 rounded ${
+                  pathname.startsWith('/clients') ? 'bg-black' : ''
                 }`}
               >
                 Clients
               </Link>
               <Link
                 href="/products"
-                className={`hover:bg-blue-700 px-3 py-2 rounded ${
-                  pathname.startsWith('/products') ? 'bg-blue-700' : ''
+                className={`hover:bg-white hover:text-black px-3 py-2 rounded ${
+                  pathname.startsWith('/products') ? 'bg-black' : ''
                 }`}
               >
                 Produits
               </Link>
               <Link
                 href="/orders"
-                className={`hover:bg-blue-700 px-3 py-2 rounded ${
-                  pathname.startsWith('/orders') ? 'bg-blue-700' : ''
+                className={`hover:bg-white hover:text-black px-3 py-2 rounded ${
+                  pathname.startsWith('/orders') ? 'bg-black' : ''
                 }`}
               >
                 Commandes
@@ -71,8 +71,8 @@ export default function Navbar() {
               {user?.role === 'admin' && (
                 <Link
                   href="/admin/users"
-                  className={`hover:bg-blue-700 px-3 py-2 rounded ${
-                    pathname.startsWith('/admin') ? 'bg-blue-700' : ''
+                  className={`hover:bg-white hover:text-black px-3 py-2 rounded ${
+                    pathname.startsWith('/admin') ? 'bg-black' : ''
                   }`}
                 >
                   Utilisateurs

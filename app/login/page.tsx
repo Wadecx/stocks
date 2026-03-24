@@ -2,6 +2,10 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -30,67 +34,64 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-black">
-      <div className="bg-white p-8 rounded-lg shadow-2xl w-full max-w-md">
-        <h1 className="text-3xl font-bold text-center mb-8 text-gray-800">
-          Connexion
-        </h1>
-
-        {error && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-            {error}
-          </div>
-        )}
-
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-              Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              required
-            />
-          </div>
-
-          <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
-              Mot de passe
-            </label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              required
-            />
-          </div>
-
-          <button
-            type="submit"
-            className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition duration-200 font-semibold"
-          >
-            Se connecter
-          </button>
-        </form>
-
-        <div className="mt-6 p-4 bg-gray-50 rounded-lg">
-          <p className="text-sm font-semibold text-gray-700 mb-2">Comptes de test :</p>
-          <div className="space-y-2 text-xs text-gray-600">
-            <div>
-              <strong>Admin :</strong> admin@admin.com / admin123
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100 p-4">
+      <Card className="w-full max-w-md shadow-lg">
+        <CardHeader className="space-y-1">
+          <CardTitle className="text-2xl font-bold tracking-tight">Connexion</CardTitle>
+          <CardDescription>Entrez vos identifiants pour accéder à votre compte</CardDescription>
+        </CardHeader>
+        <CardContent>
+          {error && (
+            <div className="mb-4 p-3 text-sm text-red-800 bg-red-50 border border-red-200 rounded-md">
+              {error}
             </div>
-            <div>
-              <strong>User :</strong> user@user.com / user123
+          )}
+
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="email">Email</Label>
+              <Input
+                type="email"
+                id="email"
+                placeholder="exemple@email.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="password">Mot de passe</Label>
+              <Input
+                type="password"
+                id="password"
+                placeholder="••••••••"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+
+            <Button type="submit" className="w-full">
+              Se connecter
+            </Button>
+          </form>
+
+          <div className="mt-6 p-4 bg-slate-50 border border-slate-200 rounded-md">
+            <p className="text-sm font-medium text-slate-700 mb-2">Comptes de test</p>
+            <div className="space-y-1.5 text-xs text-slate-600">
+              <div className="flex items-center justify-between">
+                <span className="font-medium">Admin</span>
+                <span className="font-mono">admin@admin.com / admin123</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="font-medium">User</span>
+                <span className="font-mono">user@user.com / user123</span>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }

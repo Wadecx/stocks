@@ -2,11 +2,16 @@
 
 import { useEffect, useState } from 'react';
 import { User } from '@/types';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { UserPlus, Trash2, Shield, User as UserIcon, AlertCircle } from 'lucide-react';
 
 export default function AdminUsersPage() {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
-  const [editingUser, setEditingUser] = useState<User | null>(null);
 
   useEffect(() => {
     fetchUsers();
@@ -69,99 +74,125 @@ export default function AdminUsersPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-4xl font-bold text-gray-800">Gestion des Utilisateurs</h1>
-        <button
-          onClick={handleAdd}
-          className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition"
-        >
+    <div className="container mx-auto px-4 py-8 max-w-7xl">
+      <div className="flex justify-between items-center mb-6">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">Gestion des Utilisateurs</h1>
+          <p className="text-muted-foreground mt-1">Gérez les rôles et accès des utilisateurs</p>
+        </div>
+        <Button onClick={handleAdd} size="default">
+          <UserPlus className="mr-2 h-4 w-4" />
           Ajouter un utilisateur
-        </button>
+        </Button>
       </div>
 
-      <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
-        <p className="text-yellow-800">
-          <strong>Note:</strong> Cette page utilise JSONPlaceholder pour les données utilisateurs.
-          Les modifications (ajout, suppression, changement de rôle) sont simulées localement
-          et ne sont pas persistées.
-        </p>
-      </div>
+      <Alert className="mb-6">
+        <AlertCircle className="h-4 w-4" />
+        <AlertDescription>
+          Cette page utilise JSONPlaceholder pour les données utilisateurs.
+          Les modifications sont simulées localement et ne sont pas persistées.
+        </AlertDescription>
+      </Alert>
 
-      <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
-            <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                ID
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Nom
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Email
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Rôle
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Actions
-              </th>
-            </tr>
-          </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
-            {users.map((user) => (
-              <tr key={user.id} className="hover:bg-gray-50">
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm font-medium text-gray-900">
-                    {user.id}
-                  </div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm text-gray-900">{user.name}</div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm text-gray-500">{user.email}</div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <select
-                    value={user.role}
-                    onChange={(e) =>
-                      handleRoleChange(user.id, e.target.value as 'admin' | 'user')
-                    }
-                    className={`px-3 py-1 rounded text-sm font-semibold ${
-                      user.role === 'admin'
-                        ? 'bg-purple-100 text-purple-800'
-                        : 'bg-blue-100 text-blue-800'
-                    }`}
-                  >
-                    <option value="user">User</option>
-                    <option value="admin">Admin</option>
-                  </select>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                  <button
-                    onClick={() => handleDelete(user.id)}
-                    className="text-red-600 hover:text-red-900"
-                  >
-                    Supprimer
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <Card>
+        <CardHeader>
+          <CardTitle>Utilisateurs ({users.length})</CardTitle>
+          <CardDescription>
+            Liste complète des utilisateurs avec leurs rôles
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="w-[80px]">ID</TableHead>
+                <TableHead>Nom</TableHead>
+                <TableHead>Email</TableHead>
+                <TableHead className="w-[140px]">Rôle</TableHead>
+                <TableHead className="w-[100px] text-right">Actions</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {users.map((user) => (
+                <TableRow key={user.id}>
+                  <TableCell className="font-medium">{user.id}</TableCell>
+                  <TableCell>
+                    <div className="flex items-center gap-2">
+                      {user.role === 'admin' ? (
+                        <Shield className="h-4 w-4 text-purple-500" />
+                      ) : (
+                        <UserIcon className="h-4 w-4 text-blue-500" />
+                      )}
+                      <span className="font-medium">{user.name}</span>
+                    </div>
+                  </TableCell>
+                  <TableCell className="text-muted-foreground">{user.email}</TableCell>
+                  <TableCell>
+                    <Select
+                      value={user.role}
+                      onValueChange={(value) => handleRoleChange(user.id, value as 'admin' | 'user')}
+                    >
+                      <SelectTrigger className="w-[120px]">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="user">
+                          <div className="flex items-center gap-2">
+                            <UserIcon className="h-3 w-3" />
+                            User
+                          </div>
+                        </SelectItem>
+                        <SelectItem value="admin">
+                          <div className="flex items-center gap-2">
+                            <Shield className="h-3 w-3" />
+                            Admin
+                          </div>
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </TableCell>
+                  <TableCell className="text-right">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => handleDelete(user.id)}
+                      className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </CardContent>
+      </Card>
 
-      <div className="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
-        <h3 className="font-semibold text-blue-900 mb-2">Fonctionnalités:</h3>
-        <ul className="list-disc list-inside text-blue-800 space-y-1">
-          <li>Affichage des utilisateurs depuis JSONPlaceholder</li>
-          <li>Modification des rôles (admin/user)</li>
-          <li>Ajout de nouveaux utilisateurs (simulation)</li>
-          <li>Suppression d'utilisateurs (simulation)</li>
-        </ul>
-      </div>
+      <Card className="mt-6">
+        <CardHeader>
+          <CardTitle className="text-base">Fonctionnalités disponibles</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <ul className="space-y-2 text-sm text-muted-foreground">
+            <li className="flex items-start gap-2">
+              <span className="text-primary">•</span>
+              <span>Affichage des utilisateurs depuis JSONPlaceholder</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-primary">•</span>
+              <span>Modification des rôles (admin/user)</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-primary">•</span>
+              <span>Ajout de nouveaux utilisateurs (simulation)</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-primary">•</span>
+              <span>Suppression d'utilisateurs (simulation)</span>
+            </li>
+          </ul>
+        </CardContent>
+      </Card>
     </div>
   );
 }
