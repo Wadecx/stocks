@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "name": "Jean Dupont",
+    "email": "jean.dupont@example.com",
+    "phone": "0123456789",
+    "address": "123 Rue de Paris, 75001 Paris"
+  },
+  {
+    "id": 2,
+    "name": "Marie Martin",
+    "email": "marie.martin@example.com",
+    "phone": "0234567890",
+    "address": "456 Avenue des Champs, 69001 Lyon"
+  },
+  {
+    "id": 3,
+    "name": "Pierre Dubois",
+    "email": "pierre.dubois@example.com",
+    "phone": "0345678901",
+    "address": "789 Boulevard de la Liberté, 33000 Bordeaux"
+  }
+]
